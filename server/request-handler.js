@@ -66,8 +66,8 @@ var requestHandler = function(request, response) {
     var statusCode = 200;
     headers['Content-Type'] = 'application/json';
     response.writeHead(statusCode, headers);
-    response.write(JSON.stringify(messageObj));
-    response.end();
+    // response.write(JSON.stringify(messageObj));
+    response.end(JSON.stringify(messageObj));
 
 
   //  ====================================================================

@@ -2,11 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>chatterbox</title>
+    <title>Chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -24,25 +27,23 @@
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
+      <h1>chatterberts</h1>
+      <br>
       <!-- Your HTML goes here! -->
-
-      <div class="spinner"><img src="images/spiffygif_46x46.gif"></div>
-      <div id="rooms">
-        Room:
-        <select id="roomSelect">
-        </select>
+      <p class="roomLabel"><strong>Join Room&nbsp;</strong></p>
+      <select class="dropdown" id="roomSelect">
+        <option class="defaultRoomSelect" value="SelectRoom">-Select a room-</option>
+      </select>
+      <p class="createRoomLabel"><strong>Create a New Room</strong></p>
+      <input type="text" id="newRoomInput" />
+      <button type="button" id="createRoomButton"><strong>Create</strong></button>
+      <div>
+        <p class="writeMessageLabel"><strong>Write a Message</strong></p>
+        <input type="text" id="messageInput" />
+        <button type="button" id="submitButton"><strong>Submit</strong></button>
       </div>
-      <form action="#" id="send" method="post">
-        <input type="text" name="message" id="message"/>
-        <input type="submit" name="submit" class="submit"/>
-      </form>    
     </div>
-    <div id="chats"></div>
-
-    <script>
-      $(function() {
-        app.init();
-      });
-    </script>  </body>
+    <div id="chats">
+    </div>
+  </body>
 </html>
