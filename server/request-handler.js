@@ -37,7 +37,7 @@ var requestHandler = function(request, response) {
   var address = url.parse(request.url).path;
 
   //  ====================================================================
-  //  Invalid Endpoint Requests
+  //  Handle Invalid Endpoint Requests
   //  ====================================================================
 
   if (address !== '/classes/messages') {
@@ -47,7 +47,7 @@ var requestHandler = function(request, response) {
 
 
   //  ====================================================================
-  //  OPTIONS Requests
+  //  Handle OPTIONS Requests
   //  ====================================================================
   
   // always return success to OPTIONS requests
@@ -59,10 +59,10 @@ var requestHandler = function(request, response) {
 
 
   //  ====================================================================
-  //  GET Requests
+  //  Handle GET Requests
   //  ====================================================================
   } else if (request.method === 'GET') {
-    // The outgoing status.
+
     var statusCode = 200;
     headers['Content-Type'] = 'application/json';
     response.writeHead(statusCode, headers);
@@ -71,11 +71,10 @@ var requestHandler = function(request, response) {
 
 
   //  ====================================================================
-  //  POST Requests
+  //  Handle POST Requests
   //  ====================================================================
 
   } else if (request.method === 'POST') {
-
 
     let body = '';
     // buffer the readable stream
