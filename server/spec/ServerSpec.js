@@ -10,6 +10,8 @@ var waitForThen = function (test, cb) {
   }, 5);
 };
 
+
+
 describe('Node Server Request Listener Function', function() {
   it('Should answer GET requests for /classes/messages with a 200 status code', function() {
     // This is a fake server request. Normally, the server would provide this,
@@ -59,7 +61,9 @@ describe('Node Server Request Listener Function', function() {
   it('Should accept posts to /classes/room', function() {
     var stubMsg = {
       username: 'Jono',
-      message: 'Do my bidding!'
+      message: 'Do my bidding!',
+      roomname: 'test name',
+      createdAt: 'January 1st, 2017'
     };
     var req = new stubs.request('/classes/messages', 'POST', stubMsg);
     var res = new stubs.response();
@@ -78,7 +82,9 @@ describe('Node Server Request Listener Function', function() {
   it('Should respond with messages that were previously posted', function() {
     var stubMsg = {
       username: 'Jono',
-      message: 'Do my bidding!'
+      message: 'Do my bidding!',
+      roomname: 'test name',
+      createdAt: 'January 1st, 2017'
     };
     var req = new stubs.request('/classes/messages', 'POST', stubMsg);
     var res = new stubs.response();
@@ -117,3 +123,37 @@ describe('Node Server Request Listener Function', function() {
   });
 
 });
+
+describe('Custom Tests', function() {
+  var invalidMsgObject = {
+    username: 'test username',
+    text: 'test text',
+    roomname: 'test name'
+  };
+
+  it('Should return error if client POST does not contain required data', function() {
+    var req = new stubs.request('/classes/messages', 'POST', invalidMsgObject);
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    expect(res._responseCode).to.not.equal(201);
+    expect(res._responseCode).to.equal(400);
+    expect(res._ended).to.equal(true);
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
