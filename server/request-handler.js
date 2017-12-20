@@ -20,7 +20,7 @@ var url = require('url');
 var messageObj = {results: []};
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'access-control-allow-methods': 'GET, POST, DELETE, OPTIONS',
   'access-control-allow-headers': 'content-type, accept',
   'access-control-max-age': 10 // Seconds.
 };
@@ -39,12 +39,14 @@ var requestHandler = function(request, response) {
   //  ====================================================================
   //  Handle Invalid Endpoint Requests
   //  ====================================================================
-
-  if (address !== '/classes/messages') {
+  
+  if (address === '/classes/rooms' || address === '/classes/users') {
+    response.writeHead(418, headers);
+    return response.end();
+  } else if (address !== '/classes/messages') {
     response.writeHead(404, headers);
     return response.end();
   }
-
 
   //  ====================================================================
   //  Handle OPTIONS Requests
@@ -84,13 +86,17 @@ var requestHandler = function(request, response) {
     request.on('end', () => {
       try {
         let receivedData = JSON.parse(body);
+        if (!receivedData.username || !receivedData.message || !receivedData.roomname || !receivedData.createdAt) { // if doesn't have username, text, roomname, createdAt
+          throw 'Required data property is missing';
+        } 
         messageObj.results.push(receivedData);
+        // responding to client
         headers['Content-Type'] = 'application/json';
         response.writeHead(201, headers);
         response.success = 'Updated Successfully';
         response.end();
       } catch (er) {
-        response.statusCode = 400;
+        response.writeHead(400, headers);
         response.end('error');
       }
     });

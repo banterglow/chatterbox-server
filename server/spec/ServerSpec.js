@@ -141,6 +141,34 @@ describe('Custom Tests', function() {
     expect(res._responseCode).to.equal(400);
     expect(res._ended).to.equal(true);
   });
+
+  it('Should return error if request type is not supported', function() {
+    var req = new stubs.request('/classes/messages', 'PUT');
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    expect(res._responseCode).to.equal(null);
+    expect(res._ended).to.equal(false);
+  });
+
+  it('Should return a teapot error if endpoint is not allowed', function() {
+    var req = new stubs.request('/classes/rooms', 'GET');
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    expect(res._responseCode).to.equal(418);
+    expect(res._ended).to.equal(true);
+
+    var req = new stubs.request('/classes/users', 'GET');
+    var res = new stubs.response();
+
+    handler.requestHandler(req, res);
+
+    expect(res._responseCode).to.equal(418);
+    expect(res._ended).to.equal(true);
+  });
 });
 
 
