@@ -87,7 +87,7 @@ let app = {
     $.ajax({
       // This is the url you should use to communicate with the parse API server.
       url: app.server,
-      type: 'PUT',
+      type: 'POST',
       data: message,
       contentType: 'application/json',
       success: function (data) {
